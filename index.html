@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>Analog Clock and Digital clock</title>
+    <meta name="description" content="" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="" />
+  </head>
+  <style>
+    body {
+      background-color: rgb(232, 237, 247);
+    }
+
+    .clock {
+      position: relative;
+      margin: 0 auto;
+      height: 30vw;
+      width: 30vw;
+      background: url(/img/mainclock.png) no-repeat;
+      background-size: 100%;
+    }
+    #hourHand,
+    #minuteHand,
+    #secondHand {
+      position: absolute;
+      border-radius: 5px;
+      transform-origin: bottom;
+      background-color: black;
+    }
+    #hourHand {
+      left: 49.3%;
+      height: 18%;
+      top: 18%;
+      width: 1.5%;
+      opacity: 1;
+    }
+    #minuteHand {
+      left: 49.3%;
+      height: 18%;
+      top: 18%;
+      width: 1.5%;
+      opacity: 1;
+    }
+    #secondHand {
+      left: 49.6%;
+      height: 26%;
+      top: 10%;
+      width: 1%;
+    }
+    #currenttime {
+      text-align: center;
+      font-size: 60px;
+      color: green;
+      /* background: aliceblue; */
+    }
+  </style>
+  <body>
+    <h1 style="text-align: center">Analog Clock</h1>
+
+    <div class="container">
+      <div class="row">
+        <div class="clock">
+          <div id="hourHand"></div>
+          <div id="minuteHand"></div>
+          <div id="secondHand"></div>
+        </div>
+      </div>
+    </div>
+    <div class="time-container">
+      <div id="currenttime" onload="showTime()"></div>
+    </div>
+    <p style="text-align: center; color: black">Digital Clock</p>
+
+    <script>
+      setInterval(() => {
+        d = new Date();
+        htime = d.getHours();
+        mtime = d.getMinutes();
+        stime = d.getSeconds();
+        hrotation = 30 * htime + mtime / 2;
+        mrotation = 6 * mtime;
+        srotation = 6 * stime;
+
+        hourHand.style.transform = `rotate(${hrotation}deg)`;
+        minuteHand.style.transform = `rotate(${mrotation}deg)`;
+        secondHand.style.transform = `rotate(${srotation}deg)`;
+      }, 1000);
+
+      function showTime() {
+        var date = new Date();
+        var h = date.getHours();
+        var m = date.getMinutes();
+        var s = date.getSeconds();
+        session = "AM";
+
+        if (h == 0) {
+          h = 12;
+        }
+        if (h > 12) {
+          h = h - 12;
+          session = "PM";
+        }
+
+        h = h < 10 ? "0" + h : h;
+        m = m < 10 ? "0" + m : m;
+        s = s < 10 ? "0" + s : s;
+
+        const time = h + ":" + m + ":" + s + " " + session;
+        document.getElementById("currenttime").innerText = time;
+
+        setTimeout(() => {
+          showTime();
+        }, 1000);
+      }
+
+      showTime();
+    </script>
+  </body>
+</html>
